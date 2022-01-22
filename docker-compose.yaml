@@ -1,0 +1,22 @@
+version: "3.7"
+services:
+    node_api:
+        container_name: digital_wallet_api
+        build: .
+        restart: unless-stopped
+        volumes:
+            - .:/usr/src/app
+        ports:
+            - "3025:3025"
+        links:
+            - digiwall_api_db
+        environment:
+            - db_service_name=digiwall_api_db
+    digiwall_api_db:
+        container_name: digiwall_api_db
+        image: mongo:4
+        restart: always
+        volumes:
+            - ./db:/data/db
+        ports:
+            - "27017:27017"
